@@ -33,8 +33,8 @@ def save_tokenizer(tokenizer, filename):
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(tokenizer.to_json(), f, ensure_ascii=False)
 
-save_tokenizer(tokenizer_q, '/content/drive/MyDrive/TriFusionNet_tokenizer_q.json')
-save_tokenizer(tokenizer_a, '/content/drive/MyDrive/TriFusionNet_tokenizer_a.json')
+save_tokenizer(tokenizer_q, '/content/drive/MyDrive/DoubleFusionNet_tokenizer_q.json')
+save_tokenizer(tokenizer_a, '/content/drive/MyDrive/DoubleFusionNet_tokenizer_a.json')
 
 # 시퀀스 변환 및 패딩
 sequences_q = tokenizer_q.texts_to_sequences(questions)
@@ -109,4 +109,4 @@ model_checkpoint = ModelCheckpoint('/content/drive/MyDrive/TriFusionNet_best_mod
 
 history = model.fit([X, y], np.expand_dims(y_output, -1), epochs=1, batch_size=16, validation_split=0.2, callbacks=[early_stopping, model_checkpoint])
 
-model.save('/content/drive/MyDrive/TriFusionNet_model.h5')
+model.save('/content/drive/MyDrive/DoubleFusionNet_model.h5')
