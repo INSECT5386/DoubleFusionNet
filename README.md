@@ -9,15 +9,7 @@ input_layer_6 (None, 24)
   └────────────────────────┘
          │ encoder_output_1
          ▼
-  ┌────────────────────────┐
-  │ encoder_lstm_2         │
-  │ (None, 24, 50), (None, 50), (None, 50) │
-  └────────────────────────┘
-         │ encoder_output_2
-         ▼
-  Concatenate([encoder_output_1, encoder_output_2]) 
-         ▼
-   encoder_combined (24, 100)
+    encoder_combined (24, 100)
 
 ────────────────────────────────────────────────────────────────────
 
@@ -52,20 +44,21 @@ input_layer_7 (None, 36)
          decoder_context_concat (36, 150) 
                         ▼
    TimeDistributed(Dense(vocab_size)) → Final Prediction (36, vocab_size)
+
 ```
 1. 인코더:
 
- - input_layer_6 → Embedding → 두 개의 LSTM (encoder_lstm_1과 encoder_lstm_2) → encoder_combined
+ - input_layer_6 → Embedding → 1개의 LSTM (encoder_lstm_1) → encoder_combined(24, 100)
 
 2. 디코더:
 
- - input_layer_7 → Embedding → 두 개의 병렬 LSTM 층:
+ - input_layer_7 → Embedding → 두 개의 병렬 LSTM (decoder_lstm_1, decoder_lstm_2)
 
-  - decoder_lstm_1은 Embedding (vocab_a, 50)과 encoder_lstm의 출력을 입력으로 받습니다.
+  - decoder_lstm_1은 Embedding과 encoder_lstm_1의 출력을 입력으로 받습니다.
 
-  - decoder_lstm_2는 Embedding (vocab_a, 50)과 decoder_lstm_1의 출력을 입력으로 받습니다.
+  - decoder_lstm_2는 Embedding과 decoder_lstm_1의 출력을 입력으로 받습니다.
 
- - 그 결과가 decoder_combined로 합쳐집니다.
+ - 두 LSTM의 출력을 decoder_combined로 합칩니다.
 
 3. 어텐션:
 
