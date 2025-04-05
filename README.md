@@ -1,3 +1,4 @@
+```
 input_layer_6 (None, 24)
         │
   Embedding (vocab_q, 50)
